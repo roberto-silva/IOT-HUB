@@ -1,0 +1,57 @@
+.device {
+
+
+  .page-title {
+    width: 100%;
+    color: black;
+    text-align: justify;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid #4B658A;
+  }
+
+  .card {
+    background: white;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.15);
+    cursor: pointer;
+
+    .card-header {
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #4B658A;
+      color: white;
+      font-size: 12px;
+
+      label {
+        margin-top: 0.5rem;
+      }
+    }
+
+    .card-body {
+      color: black;
+    }
+
+    .status-icon {
+      i {
+        color: #dc3545;
+      }
+
+      .active {
+        color: #28a745;
+      }
+    }
+  }
+
+  .chart-status {
+
+    .chart {
+      background: white;
+      border-radius: 0.4rem;
+      box-shadow: 0 8px 16px 0 rgba(75, 101, 138, 0.25);
+    }
+
+
+  }
+}
+

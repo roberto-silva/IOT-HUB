@@ -1,0 +1,26 @@
+.navbar-adapter {
+  position: fixed;
+  height: 4rem;
+  left: 16rem;
+  width: calc(100% - 16.5rem);
+  padding: 0.5rem 1rem;
+  background: #4B658A;
+  border-radius: 0.4rem;
+  border-bottom: 1px solid #cbcee8 !important;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.15);
+
+  .nav {
+    margin-left: -10rem;
+
+
+    h1 {
+      font-family: "Raleway", sans-serif;
+      font-weight: 300;
+      font-size: 24px;
+      color: white;
+      -webkit-transition: all 0.4s ease 0s;
+      -o-transition: all 0.4s ease 0s;
+      transition: all 0.4s ease 0s;
+    }
+  }
+}

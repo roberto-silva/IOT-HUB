@@ -1,0 +1,262 @@
+<section class="device-station">
+  <div class="d-flex justify-content-start header-page mt-2 mb-3">
+    <h5 class="page-title">OEE calculation - Overall Equiment Effectivenness</h5>
+    <button type="button" class="btn  btn-sm capture"
+            [class.btn-success]="!capture"
+            [class.btn-danger]="capture" (click)="whenCapture()">Start Capture</button>
+  </div>
+
+  <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <ng-container [ngTemplateOutlet]="noteOfStopTemplate"></ng-container>
+    </div>
+    <div class="col-lg-8">
+      <ng-container [ngTemplateOutlet]="productionNoteTemplate"></ng-container>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <ng-container [ngTemplateOutlet]="oeeTemplate"></ng-container>
+    </div>
+    <div class="col-lg-8">
+      <ng-template [ngTemplateOutlet]="productionTemplate"></ng-template>
+    </div>
+  </div>
+
+</section>
+
+
+<ng-template #formTemplate>
+  <form [formGroup]="formGroup" *ngIf="formGroup">
+    <div class="row">
+
+      <div class="col-lg-3 mb-3">
+        <label class="d-block font-weight-semibold mb-1" [for]="DeviceStationConst.PRODUCTION_SCHEDULE">Programação de
+          Produção (Horas)</label>
+        <input type="text" class="form-control"
+               [class.disabled]="isDisabledForm(DeviceStationConst.PRODUCTION_SCHEDULE)" autocomplete="off"
+               [id]="DeviceStationConst.PRODUCTION_SCHEDULE"
+               [formControlName]="DeviceStationConst.PRODUCTION_SCHEDULE"/>
+      </div>
+
+      <div class="col-lg-2 mb-3">
+        <label class="d-block font-weight-semibold mb-1" [for]="DeviceStationConst.EQUIPMENT">Equipamento</label>
+        <input type="text" class="form-control"
+               [class.disabled]="isDisabledForm(DeviceStationConst.EQUIPMENT)" autocomplete="off"
+               [id]="DeviceStationConst.EQUIPMENT" [formControlName]="DeviceStationConst.EQUIPMENT"/>
+      </div>
+
+      <div class="col-lg-3 mb-3">
+        <label class="d-block font-weight-semibold mb-1" [for]="DeviceStationConst.PRODUCT_PRODUCTION">Produto em
+          Produção</label>
+        <input type="text" class="form-control"
+               [class.disabled]="isDisabledForm(DeviceStationConst.PRODUCT_PRODUCTION)" autocomplete="off"
+               [id]="DeviceStationConst.PRODUCT_PRODUCTION" [formControlName]="DeviceStationConst.PRODUCT_PRODUCTION"/>
+      </div>
+
+      <div class="col-lg-2 mb-3">
+        <label class="d-block font-weight-semibold mb-1" [for]="DeviceStationConst.PRODUCTIVE_CAPACITY">Capacidade
+          produtiva(pç/hora)</label>
+        <input type="text" class="form-control"
+               [class.disabled]="isDisabledForm(DeviceStationConst.PRODUCTIVE_CAPACITY)" autocomplete="off"
+               [id]="DeviceStationConst.PRODUCTIVE_CAPACITY"
+               [formControlName]="DeviceStationConst.PRODUCTIVE_CAPACITY"/>
+      </div>
+
+      <div class="col-lg-2 mb-3">
+        <label class="d-block font-weight-semibold mb-1" [for]="DeviceStationConst.STANDARD_TIME">Standard
+          time(pç/min)</label>
+        <input type="text" class="form-control"
+               [class.disabled]="isDisabledForm(DeviceStationConst.STANDARD_TIME)" autocomplete="off"
+               [id]="DeviceStationConst.STANDARD_TIME" [formControlName]="DeviceStationConst.STANDARD_TIME"/>
+      </div>
+
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #noteOfStopTemplate>
+  <table class="table table-striped">
+    <thead class="thead">
+    <tr>
+      <th colspan="5">Apontamento de Paradas</th>
+    </tr>
+    <tr>
+      <th colspan="1">Início</th>
+      <th colspan="1">Término</th>
+      <th colspan="1">Duração</th>
+      <th colspan="2">Motivo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of getNoteOfStop()">
+      <td colspan="1">
+        <label>{{ item?.start }}</label>
+      </td>
+      <td colspan="1">
+        <label>{{ item?.stop }}</label>
+      </td>
+      <td colspan="1">
+        <label>{{ item?.spent }}</label>
+      </td>
+      <td colspan="2">
+        <label>{{ item?.reason }}</label>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template #productionNoteTemplate>
+  <div class="row">
+    <div class="col-lg-4">
+      <ng-container [ngTemplateOutlet]="productionNoteShift"
+                    [ngTemplateOutletContext]="{items: getProductionNoteShift(), shift: '1'}"></ng-container>
+    </div>
+    <div class="col-lg-4">
+      <ng-container [ngTemplateOutlet]="productionNoteShift"
+                    [ngTemplateOutletContext]="{items: getProductionNoteShift(), shift: '2'}"></ng-container>
+    </div>
+    <div class="col-lg-4">
+      <ng-container [ngTemplateOutlet]="productionNoteShift"
+                    [ngTemplateOutletContext]="{items: getProductionNoteShift(), shift: '3'}"></ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #productionNoteShift let-items="items" let-shift="shift">
+  <table class="table table-striped">
+    <thead class="thead">
+    <tr>
+      <th colspan="4">{{shift + 'º Turno'}}</th>
+    </tr>
+    <tr>
+      <th colspan="1">Horário</th>
+      <th colspan="1">Produção</th>
+      <th colspan="1">Peças Boas</th>
+      <th colspan="1">Peças Ruins</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of items">
+      <td colspan="1">
+        <label>{{ item?.time }}</label>
+      </td>
+      <td colspan="1">
+        <label>{{ item?.production }}</label>
+      </td>
+      <td colspan="1">
+        <label>{{ item?.good_parts }}</label>
+      </td>
+      <td colspan="1">
+        <label>{{ item?.bad_parts }}</label>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-template>
+
+
+<ng-template #oeeTemplate>
+  <div class="row">
+    <div class="col-lg-4">
+      <ng-container *ngFor="let item of getStatusOee()">
+        <ng-template [ngTemplateOutlet]="cardStatusOeeTemplate"
+                     [ngTemplateOutletContext]="{ item: item }"></ng-template>
+      </ng-container>
+    </div>
+    <div class="col-lg-8">
+      <app-gouge-chart [title]="'OEE'" [value]="75" [color]="'#dc3545'"></app-gouge-chart>
+    </div>
+  </div>
+</ng-template>
+<ng-template #cardStatusOeeTemplate let-item="item">
+  <div class="card-status mb-3">
+    <div class="card">
+      <div class="card-header">
+        <label>{{item.name}}</label>
+      </div>
+      <div class="card-body">
+        <label>{{item?.percentage}} %</label>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #productionTemplate>
+  <div class="row">
+    <div class="col-lg-3">
+      <ng-container *ngFor="let item of getProductionTurnCard()">
+        <ng-container [ngTemplateOutlet]="cardProductionTemplate"
+                      [ngTemplateOutletContext]="{item: item}"></ng-container>
+      </ng-container>
+    </div>
+    <div class="col-lg-4">
+      <ng-container *ngFor="let item of getProductCard()">
+        <ng-container [ngTemplateOutlet]="cardProductTemplate"
+                      [ngTemplateOutletContext]="{item: item}"></ng-container>
+      </ng-container>
+    </div>
+    <div class="col-lg-5">
+      <div class="row">
+        <div class="col-lg-12 mb-3">
+          <ng-container [ngTemplateOutlet]="cardProductionTemplate"
+                        [ngTemplateOutletContext]="{item:  {name: 'Producao Total', value: '91'},}"></ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 mb-3">
+          <ng-container [ngTemplateOutlet]="cardProductTemplate"
+                        [ngTemplateOutletContext]="{item:  {good: '91', bad: '10'}}"></ng-container>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 mb-3">
+          <app-gouge-chart [title]="'Produtividade'" [value]="93" [color]="'#28a745'"></app-gouge-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #cardProductionTemplate let-item="item">
+  <div class="card-status mb-3">
+    <div class="card">
+      <div class="card-header">
+        <label>{{item.name}}</label>
+      </div>
+      <div class="card-body">
+        <i *ngIf="item.status === 'success'" class="fa-solid fa-circle-check success"></i>
+        <i *ngIf="item.status === 'danger'" class="fa-sharp fa-solid fa-circle-exclamation danger"></i>
+        <i *ngIf="item.status === 'warning'" class="fa-sharp fa-solid fa-triangle-exclamation warning"></i>
+        <label style="margin-left: 1rem">{{item?.value}}</label>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #cardProductTemplate let-item="item">
+  <table class="table table-striped">
+    <thead class="thead">
+    <tr>
+      <th colspan="1">Peças Boas</th>
+      <th colspan="1">Peças Ruins</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td colspan="1">
+        <label>{{ item?.good }}</label>
+      </td>
+      <td colspan="1">
+        <label>{{ item?.bad }}</label>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-template>
+

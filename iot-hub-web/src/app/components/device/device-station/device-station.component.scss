@@ -1,0 +1,205 @@
+.device-station {
+
+  .header-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid #4B658A;
+
+    .page-title {
+      width: 100%;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      color: black;
+    }
+
+    .capture {
+      width: 25%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  label {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    color: black;
+  }
+
+  input {
+    height: 30px;
+    border: 1px solid #000000;
+    border-radius: 2px !important;
+    padding: 0.1rem 0.75rem !important;
+    box-shadow: none;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  input.disabled {
+    box-shadow: none !important;
+    border-radius: 1px !important;
+    background: #b5babd !important;
+    border-color: #000000 !important;
+  }
+
+  textarea {
+    min-height: 30px !important;
+    height: 30px;
+    border: 1px solid #000000;
+    border-radius: 2px !important;
+    padding: 0.1rem 0.75rem !important;
+    box-shadow: none;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 2;
+  }
+
+  textarea.disabled {
+    box-shadow: none !important;
+    border-radius: 1px !important;
+    background: #b5babd !important;
+    border-color: #000000 !important;
+  }
+
+  textarea.form-control {
+    min-height: 30px !important;
+  }
+
+
+  .table {
+    border-radius: 0.4rem !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+
+    thead {
+      width: 100%;
+      background: #4B658A;
+      border-radius: 0.4rem !important;
+      padding: 7px 12px;
+      text-align: center;
+      color: white;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 12px;
+
+      tr th {
+        border: 1px solid #ecedfb;
+
+        &:last-of-type {
+          border-right: none;
+        }
+      }
+    }
+  }
+
+  .table {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    text-align: center;
+    line-height: 15px;
+
+    thead {
+      position: sticky !important;
+      top: 0 !important;
+    }
+
+    tbody {
+      overflow: auto !important;
+      max-height: 100% !important;
+      border: none !important;
+    }
+
+    tbody .action-tr {
+      cursor: pointer;
+    }
+
+    tbody tr {
+      padding: 7px 12px;
+      color: #000000;
+      font-weight: 700;
+
+      td {
+        border: 1px solid #ecedfb;
+
+        label {
+          color: #244c74;
+        }
+      }
+    }
+  }
+
+  .table-striped > tbody > tr:nth-child(odd) > td,
+  .table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #ffffff;
+  }
+
+  .table-striped > tbody > tr:nth-child(even) > td,
+  .table-striped > tbody > tr:nth-child(even) > th {
+    background-color: #fafafaff;
+  }
+
+  .card-status {
+    .card {
+      background: white;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+      text-align: center;
+
+      .card-header {
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #4B658A;
+        font-size: 12px;
+
+        label {
+          color: white;
+        }
+
+      }
+
+      .card-body {
+        background: white;
+        color: black;
+        border: none;
+        border-bottom-left-radius: 0.4rem;
+        border-bottom-right-radius: 0.4rem;
+
+        label {
+          font-size: 20px;
+          color: #173F61;
+        }
+
+        i {
+          color: black;
+        }
+
+        i.success {
+          color: #28a745;
+        }
+
+        i.danger {
+          color: #dc3545;
+        }
+
+        i.warning {
+          color: #ffc107;
+        }
+      }
+
+    }
+  }
+}

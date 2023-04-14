@@ -1,0 +1,71 @@
+.sidebar-adapter {
+  position: fixed;
+  height: calc(100% - 1rem);
+  width: 15rem;
+  border-radius: 0.4rem;
+  border-right: 1px solid rgba(75, 101, 138, 0.25) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15), inset 0 -1px 0 rgba(255,255,255,0.15);
+
+  .sidebar-profile {
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 2px solid white;
+    background: #4B658A;
+
+    h5 {
+      color: white;
+      font-family: "Raleway", sans-serif;
+      font-weight: 600;
+    }
+
+    i {
+      font-size: 40px;
+      color: white;
+    }
+  }
+
+  .sidebar-menu .list-group .list-group-item {
+    cursor: pointer;
+    background: transparent !important;
+    border-radius: 0;
+    border: none;
+    border-left: 5px solid transparent;
+    border-bottom: 2px solid white;
+    padding: 1rem;
+    text-align: center;
+    vertical-align: middle;
+
+    a {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      font-family: "Raleway", sans-serif;
+      font-weight: 600;
+      color: black;
+      cursor: pointer;
+      -webkit-transition: all 0.4s ease 0s;
+      -o-transition: all 0.4s ease 0s;
+      transition: all 0.4s ease 0s;
+
+      span {
+        margin-left: 0.6rem;
+      }
+
+      i {
+        font-size: 100% !important;
+        vertical-align: unset;
+      }
+    }
+
+    &:last-of-type {
+      border-bottom: 2px solid white;
+    }
+  }
+
+  .sidebar-menu .list-group .active {
+    border-left: 5px solid #4B658A;
+  }
+
+}

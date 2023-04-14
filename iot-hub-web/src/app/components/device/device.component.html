@@ -1,0 +1,62 @@
+<section class="device">
+  <div class="d-flex justify-content-center mt-2 mb-3">
+    <h5 class="page-title">Charts</h5>
+  </div>
+
+  <ng-container [ngTemplateOutlet]="chatsTemplate"></ng-container>
+
+  <div class="d-flex justify-content-center mt-3 mb-3">
+    <h5 class="page-title">Devices</h5>
+  </div>
+
+  <div class="row">
+    <ng-container *ngFor="let device of devices">
+      <div class="col-lg-3">
+        <ng-container [ngTemplateOutlet]="deviceTemplate" [ngTemplateOutletContext]="{item: device}"></ng-container>
+      </div>
+    </ng-container>
+  </div>
+
+</section>
+<ng-template #deviceTemplate let-item="item">
+  <div class="card mb-3 text-center" (click)="goToDeviceStation(item?.id)">
+    <div class="card-header">
+      <label class="card-title">{{item.name}}</label>
+    </div>
+    <div class="card-body">
+      <div class="d-flex justify-content-around">
+        <h6 class="card-subtitle mb-2">{{item.product}}</h6>
+        <h6 class="card-subtitle mb-2 status-icon">
+          <i class="fa-solid fa-globe" [class.active]="item.status"></i>
+        </h6>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #chatsTemplate>
+  <section class="chart-status">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="chart">
+          <apx-chart [series]="positiveStatus.series" [chart]="positiveStatus.chart"
+                     [dataLabels]="positiveStatus.dataLabels"
+                     [plotOptions]="positiveStatus.plotOptions" [yaxis]="positiveStatus.yaxis"
+                     [legend]="positiveStatus.legend"
+                     [fill]="positiveStatus.fill" [stroke]="positiveStatus.stroke" [tooltip]="positiveStatus.tooltip"
+                     [xaxis]="positiveStatus.xaxis"></apx-chart>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="chart">
+          <apx-chart [series]="negativeStatus.series" [chart]="negativeStatus.chart"
+                     [dataLabels]="negativeStatus.dataLabels"
+                     [plotOptions]="negativeStatus.plotOptions" [yaxis]="negativeStatus.yaxis"
+                     [legend]="negativeStatus.legend"
+                     [fill]="negativeStatus.fill" [stroke]="negativeStatus.stroke" [tooltip]="negativeStatus.tooltip"
+                     [xaxis]="negativeStatus.xaxis"></apx-chart>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>

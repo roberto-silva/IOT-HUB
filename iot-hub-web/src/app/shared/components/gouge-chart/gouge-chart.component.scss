@@ -1,0 +1,35 @@
+.radialbar-chart {
+
+  .card {
+    background-image: linear-gradient(to top right, #171721, #173F61);
+    border: none;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+
+    .card-header {
+      height: 2.5rem;
+      background: #4B658A;
+    }
+
+    .card-body {
+      background: white;
+      border: none;
+      border-bottom-left-radius: 0.4rem;
+      border-bottom-right-radius: 0.4rem;
+
+      label {
+        font-size: 20px;
+        color: #173F61;
+      }
+
+      .chart {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+  }
+}

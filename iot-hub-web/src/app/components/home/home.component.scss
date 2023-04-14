@@ -1,0 +1,38 @@
+.home {
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+
+  .content-wrapper {
+    position: fixed;
+    top: 5rem;
+    left: 17rem;
+    height: calc(100% - 0rem);
+    width: calc(100% - 18.5rem);
+    padding: 1rem;
+    background: transparent !important;
+    transition: 300ms;
+    overflow: auto;
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
