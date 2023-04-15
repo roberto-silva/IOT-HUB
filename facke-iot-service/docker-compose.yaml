@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  nodered:
+    image: nodered/node-red:latest
+    container_name: node-red
+    environment:
+      - PORT=1880
+    ports:
+      - 1880:1880
+    volumes:
+      - ./data:/data
+  app:
+    container_name: facke-iot-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    environment:
+      - PORT=3000
+    ports:
+      - 3000:3000
+    links:
+      - nodered
+    depends_on:
+      - nodered
