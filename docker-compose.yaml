@@ -10,21 +10,23 @@ services:
       - 1880:1880
     volumes:
       - ./data:/data
-#  db:
-#    restart: always
-#    image: postgres:latest
-#    ports:
-#      - 543:5432
-#    environment:
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=root
-#      - POSTGRES_DB=iotHub
-  iot-hub-web:
+  db:
+    restart: always
+    image: postgres:latest
+    ports:
+      - 543:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=iotHub
+  web:
+    container_name: web
     image: 'frontend'
     build: ./iot-hub-web
     ports:
       - 4200:80
-  facke-iot-service:
+  iot:
+    container_name: iot
     build:
       context: ./facke-iot-service
       dockerfile: ./Dockerfile
@@ -39,3 +41,17 @@ services:
       - nodered
     depends_on:
       - nodered
+  iot-hub-api:
+    container_name: iot-hub-api
+    build:
+      context: ./iot-hub-api
+      dockerfile: Dockerfile
+    image: maven-wrapper:latest
+    ports:
+      - 8080:8080
+    links:
+      - nodered
+      - db
+    depends_on:
+      - nodered
+      - db
