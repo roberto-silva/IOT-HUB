@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  nodered:
+    image: nodered/node-red:latest
+    container_name: node-red
+    environment:
+      - PORT=1880
+    ports:
+      - 1880:1880
+    volumes:
+      - ./data:/data
+#  db:
+#    restart: always
+#    image: postgres:latest
+#    ports:
+#      - 543:5432
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=root
+#      - POSTGRES_DB=iotHub
+  iot-hub-web:
+    image: 'frontend'
+    build: ./iot-hub-web
+    ports:
+      - 4200:80
+  facke-iot-service:
+    build:
+      context: ./facke-iot-service
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app
+    environment:
+      - PORT=3000
+    ports:
+      - 3000:3000
+    links:
+      - nodered
+    depends_on:
+      - nodered

@@ -5,8 +5,8 @@ LABEL maintainer="soft"
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app
 COPY package-lock.json /usr/src/app
-RUN npm install --silent
-RUN npm install ng-apexcharts -g --silent
+RUN npm install --force
+RUN npm install ng-apexcharts -g --force
 COPY . .
 RUN npm run build
 

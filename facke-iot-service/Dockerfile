@@ -1,22 +1,22 @@
 FROM node:16-slim as BUILDER
-LABEL maintainer="Marcelo Souza Santos"
 
 WORKDIR /usr/src/app
 
-# Install app dependencies
 COPY package*.json ./
+COPY tsconfig.build.json ./
+COPY tsconfig.json ./
+
 RUN npm install
 
-COPY src ./src
+COPY . .
+RUN npm run build
 
-FROM node:16-alpine
+FROM node
 
-ARG NODE_ENV
-
-WORKDIR /usr/src/app
-
-COPY --from=BUILDER /usr/src/app/ ./
+COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/tsconfig.build.json ./
+COPY --from=builder /usr/src/app/dist ./dist
 
 EXPOSE 3000
-
-CMD [ "npm", "start" ]
+CMD [ "node", "dist/main" ]
