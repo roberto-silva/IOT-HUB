@@ -46,7 +46,6 @@ services:
     build:
       context: ./iot-hub-api
       dockerfile: Dockerfile
-    image: maven-wrapper:latest
     ports:
       - 8080:8080
     links:
