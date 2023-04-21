@@ -1,7 +1,9 @@
 package com.soft.iot_hub_api.dto;
 
+import com.soft.iot_hub_api.domain.Production;
 import com.soft.iot_hub_api.domain.enums.Time;
 import lombok.*;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 
@@ -23,6 +25,10 @@ public class ProductionDTO implements Serializable {
 
     @Getter(AccessLevel.NONE)
     private Integer total;
+
+    public ProductionDTO(Production production) {
+        BeanUtils.copyProperties(production, this);
+    }
 
     public Integer getTotal() {
         return goodPiece + badPiece;

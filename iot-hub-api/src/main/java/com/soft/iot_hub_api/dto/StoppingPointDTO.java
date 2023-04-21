@@ -1,9 +1,11 @@
 package com.soft.iot_hub_api.dto;
 
+import com.soft.iot_hub_api.domain.StoppingPoint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import javax.persistence.Column;
 import java.io.Serializable;
@@ -25,6 +27,10 @@ public class StoppingPointDTO implements Serializable {
     private Instant duration;
 
     private String reason;
+
+    public StoppingPointDTO(StoppingPoint stoppingPoint) {
+        BeanUtils.copyProperties(stoppingPoint, this);
+    }
 
     public Long getDuration() {
         return start.until(end, ChronoUnit.MINUTES);

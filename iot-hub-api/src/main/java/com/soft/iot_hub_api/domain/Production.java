@@ -32,6 +32,9 @@ public class Production {
     @Column(name = "bad_piece")
     private Integer badPiece = 0;
 
+    @Column(name = "hourly")
+    private Integer hourly = 0;
+
     public void addGoodPiece() {
         this.goodPiece++;
     }
