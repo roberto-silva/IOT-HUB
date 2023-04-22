@@ -4,6 +4,7 @@ import com.soft.iot_hub_api.domain.Machine;
 import com.soft.iot_hub_api.domain.enums.Time;
 import com.soft.iot_hub_api.dto.MachineDTO;
 import com.soft.iot_hub_api.dto.ProductionDTO;
+import com.soft.iot_hub_api.dto.SimplifiedMachineDTO;
 import com.soft.iot_hub_api.dto.StoppingPointDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class DBService {
     }
 
     private Machine createMachine() {
-        MachineDTO machineDTO = MachineDTO.builder()
+        SimplifiedMachineDTO machineDTO = SimplifiedMachineDTO.builder()
                 .name("Bagger")
                 .maximumProductionCapacity(1000)
                 .piecesPerMinute(100)
