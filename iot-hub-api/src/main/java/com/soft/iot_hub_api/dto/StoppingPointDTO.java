@@ -20,9 +20,9 @@ public class StoppingPointDTO implements Serializable {
 
     private Long id;
 
-    private Instant start;
+    private Instant startPoint;
 
-    private Instant end;
+    private Instant endPoint;
 
     private Instant duration;
 
@@ -33,6 +33,6 @@ public class StoppingPointDTO implements Serializable {
     }
 
     public Long getDuration() {
-        return start.until(end, ChronoUnit.MINUTES);
+        return startPoint.until(endPoint, ChronoUnit.MINUTES);
     }
 }

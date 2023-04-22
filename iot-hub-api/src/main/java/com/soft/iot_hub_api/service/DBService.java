@@ -1,34 +1,56 @@
 package com.soft.iot_hub_api.service;
 
-import com.soft.iot_hub_api.domain.Production;
-import com.soft.iot_hub_api.domain.StoppingPoint;
+import com.soft.iot_hub_api.domain.Machine;
+import com.soft.iot_hub_api.domain.enums.Time;
+import com.soft.iot_hub_api.dto.MachineDTO;
 import com.soft.iot_hub_api.dto.ProductionDTO;
 import com.soft.iot_hub_api.dto.StoppingPointDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 @Service
 @AllArgsConstructor
 public class DBService {
 
-    private  MachineService machineService;
+    private MachineService machineService;
 
     public void init() {
-        var production = this.createProduction(new ProductionDTO());
-        var stoppingPoint = this.createStoppingPoint(new StoppingPointDTO());
-        this.createMachine(production, stoppingPoint);
+        Machine machine = this.createMachine();
+        ProductionDTO production = this.createProduction();
+        StoppingPointDTO stoppingPoint = this.createStoppingPoint();
+        machineService.addProduction(machine.getId(), production);
+        machineService.addStoppingPoint(machine.getId(), stoppingPoint);
     }
 
-    private StoppingPoint createStoppingPoint(StoppingPointDTO stoppingPointDTO) {
-        return null;
+    private ProductionDTO createProduction() {
+        return ProductionDTO.builder()
+                .product("Small bag")
+                .time(Time.AFTERNOON)
+                .goodPiece(1000)
+                .badPiece(50)
+                .build();
     }
 
-    private Production createProduction(ProductionDTO productionDTO) {
-        return null;
+    private StoppingPointDTO createStoppingPoint() {
+        return StoppingPointDTO.builder()
+                .reason("Machine under maintenance")
+                .startPoint(Instant.now())
+                .endPoint(Instant.now().minus(24, ChronoUnit.HOURS))
+                .build();
     }
 
-    private void createMachine(Production productionDTO, StoppingPoint stoppingPointDTO) {
+    private Machine createMachine() {
+        MachineDTO machineDTO = MachineDTO.builder()
+                .name("Bagger")
+                .maximumProductionCapacity(1000)
+                .piecesPerMinute(100)
+                .workingTime(24)
+                .build();
 
+        return machineService.create(machineDTO);
     }
 
 }

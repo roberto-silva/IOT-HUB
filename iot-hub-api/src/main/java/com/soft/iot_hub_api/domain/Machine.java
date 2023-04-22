@@ -10,9 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "machine")
+@Table(name = "machine")
 public class Machine {
 
     @Id
@@ -24,9 +25,11 @@ public class Machine {
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "machine_id")
     private Set<Production> productions = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "machine_id")
     private Set<StoppingPoint> stoppingPoints = new HashSet<>();
 
     @Column(name = "pieces_per_minute")
@@ -37,5 +40,22 @@ public class Machine {
 
     @Column(name = "working_time")
     private Integer workingTime;
+
+    public void addProduction(Production production) {
+        this.productions.add(production);
+    }
+
+    public void removeProduction(Long productionId) {
+        this.productions.removeIf(production -> production.getId().equals(productionId));
+    }
+
+    public void addStoppingPoint(StoppingPoint stoppingPoint) {
+        this.stoppingPoints.add(stoppingPoint);
+    }
+
+    public void removeStoppingPoint(Long stoppingPointId) {
+        this.stoppingPoints.removeIf(stoppingPoint -> stoppingPoint.getId().equals(stoppingPointId));
+    }
+
 
 }

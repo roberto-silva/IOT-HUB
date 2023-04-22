@@ -8,9 +8,10 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "stopping_point")
+@Table(name = "stopping_point")
 public class StoppingPoint {
 
     @Id
@@ -18,11 +19,11 @@ public class StoppingPoint {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "start")
-    private Instant start;
+    @Column(name = "start_point")
+    private Instant startPoint;
 
-    @Column(name = "end")
-    private Instant end;
+    @Column(name = "end_point")
+    private Instant endPoint;
 
     @Column(name = "reason")
     private String reason;
