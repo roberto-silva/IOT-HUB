@@ -10,7 +10,7 @@
     {
         "id": "f6f2187d.f17ca8",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "SOFT",
         "disabled": false,
         "info": ""
     },
@@ -27,8 +27,8 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 430,
-        "y": 280,
+        "x": 410,
+        "y": 300,
         "wires": []
     },
     {
@@ -44,7 +44,6 @@
         "y": 340,
         "wires": [
             [
-                "55edd829512bef11",
                 "7825e804522c6a7d"
             ]
         ]
@@ -56,26 +55,28 @@
         "name": "",
         "statusCode": "",
         "headers": {},
-        "x": 410,
-        "y": 420,
+        "x": 650,
+        "y": 280,
         "wires": []
     },
     {
         "id": "7825e804522c6a7d",
         "type": "function",
         "z": "f6f2187d.f17ca8",
-        "name": "function 1",
+        "name": "passe to payload",
         "func": "msg.payload = { response: msg.payload  };\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 420,
-        "y": 340,
+        "x": 430,
+        "y": 360,
         "wires": [
             [
-                "5c4db087942204d0"
+                "5c4db087942204d0",
+                "88b2c5f940c08e04",
+                "cb5761e0f7b15c48"
             ]
         ]
     },
@@ -83,11 +84,11 @@
         "id": "59cdd4929a049d3f",
         "type": "http request",
         "z": "f6f2187d.f17ca8",
-        "name": "",
+        "name": "http://localhost:8080/api/v1/machines",
         "method": "POST",
         "ret": "obj",
         "paytoqs": "ignore",
-        "url": "http://host.docker.internal:3000/information",
+        "url": "http://localhost:8080/api/v1/machines",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -95,11 +96,12 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 570,
-        "y": 500,
+        "x": 1430,
+        "y": 140,
         "wires": [
             [
-                "b66e8bfc5f31d577"
+                "b66e8bfc5f31d577",
+                "ca2150fbd18be17b"
             ]
         ]
     },
@@ -116,8 +118,320 @@
         "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 790,
-        "y": 500,
+        "x": 1810,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "88b2c5f940c08e04",
+        "type": "switch",
+        "z": "f6f2187d.f17ca8",
+        "name": "sendToApi",
+        "property": "req.headers.point",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "machine",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "machine/id",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "machine/id/stoppoing-point",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "machine/id/production",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": true,
+        "outputs": 4,
+        "x": 670,
+        "y": 360,
+        "wires": [
+            [
+                "4188abef380f5c13"
+            ],
+            [
+                "598c939847803dcf"
+            ],
+            [
+                "a277f92e129bd052"
+            ],
+            [
+                "15e0946f51570048"
+            ]
+        ]
+    },
+    {
+        "id": "cfa3c8d0762573ef",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "http://localhost:8080/api/v1/machines/{id}",
+        "method": "PUT",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:8080/api/v1/machines/{{req.headers.id}}",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1440,
+        "y": 280,
+        "wires": [
+            [
+                "42426e1b7278d403",
+                "d44e12a70e143dd6"
+            ]
+        ]
+    },
+    {
+        "id": "42426e1b7278d403",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1810,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "742021f162e25c5d",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "http://localhost:8080/api/v1/machines/{id}/stopping-points",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:8080/api/v1/machines/{{req.headers.id}}/stopping-points",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1490,
+        "y": 440,
+        "wires": [
+            [
+                "b6d6cbc6574c9c63",
+                "785d28c2ed0369a9"
+            ]
+        ]
+    },
+    {
+        "id": "b6d6cbc6574c9c63",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1810,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "6533812e34d015cb",
+        "type": "http request",
+        "z": "f6f2187d.f17ca8",
+        "name": "http://localhost:8080/api/v1/machines/{id}/productions",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:8080/api/v1/machines/{{req.headers.id}}/productions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1480,
+        "y": 580,
+        "wires": [
+            [
+                "9be03e1877bd46e2",
+                "050879d328d81d3a"
+            ]
+        ]
+    },
+    {
+        "id": "9be03e1877bd46e2",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1810,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "cb5761e0f7b15c48",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "To Request?",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "req.headers.point",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "4188abef380f5c13",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "passe to payload machine",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 990,
+        "y": 140,
+        "wires": [
+            [
+                "59cdd4929a049d3f"
+            ]
+        ]
+    },
+    {
+        "id": "598c939847803dcf",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "passe to payload machine/id",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 280,
+        "wires": [
+            [
+                "cfa3c8d0762573ef"
+            ]
+        ]
+    },
+    {
+        "id": "a277f92e129bd052",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "passe to payload machine/id/stoppoing-point",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 440,
+        "wires": [
+            [
+                "742021f162e25c5d"
+            ]
+        ]
+    },
+    {
+        "id": "15e0946f51570048",
+        "type": "function",
+        "z": "f6f2187d.f17ca8",
+        "name": "passe to payload machine/id/production",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 580,
+        "wires": [
+            [
+                "6533812e34d015cb"
+            ]
+        ]
+    },
+    {
+        "id": "ca2150fbd18be17b",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "reponse",
+        "statusCode": "",
+        "headers": {},
+        "x": 1800,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d44e12a70e143dd6",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "reponse",
+        "statusCode": "",
+        "headers": {},
+        "x": 1800,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "785d28c2ed0369a9",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "reponse",
+        "statusCode": "",
+        "headers": {},
+        "x": 1800,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "050879d328d81d3a",
+        "type": "http response",
+        "z": "f6f2187d.f17ca8",
+        "name": "reponse",
+        "statusCode": "",
+        "headers": {},
+        "x": 1800,
+        "y": 620,
         "wires": []
     }
 ]

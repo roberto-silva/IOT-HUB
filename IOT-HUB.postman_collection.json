@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "70a52068-1f00-4614-8ff6-8d43a9cf0b55",
+		"name": "IOT-HUB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20003387"
+	},
+	"item": [
+		{
+			"name": "datadevice",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "sec-ch-ua",
+						"value": "\"Google Chrome\";v=\"111\", \"Not(A:Brand\";v=\"8\", \"Chromium\";v=\"111\""
+					},
+					{
+						"key": "sec-ch-ua-mobile",
+						"value": "?0"
+					},
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Access-Control-Allow-Methods",
+						"value": "GET,OPTIONS,PATCH,DELETE,POST,PUT"
+					},
+					{
+						"key": "Access-Control-Allow-Origin",
+						"value": "*"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json, text/plain, */*"
+					},
+					{
+						"key": "Referer",
+						"value": "http://localhost:4200/"
+					},
+					{
+						"key": "Access-Control-Allow-Credentials",
+						"value": "true"
+					},
+					{
+						"key": "Access-Control-Allow-Headers",
+						"value": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization"
+					},
+					{
+						"key": "sec-ch-ua-platform",
+						"value": "\"Windows\""
+					}
+				],
+				"url": {
+					"raw": "https://puc-iot-hub-pipe-api.azurewebsites.net/v1/datadevice",
+					"protocol": "https",
+					"host": [
+						"puc-iot-hub-pipe-api",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"v1",
+						"datadevice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{baseUrl}}/facke-iot/machine",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"name\": \"string\",\r\n  \"productions\": [\r\n    {\r\n      \"id\": 0,\r\n      \"time\": \"MORNING\",\r\n      \"product\": \"string\",\r\n      \"goodPiece\": 0,\r\n      \"badPiece\": 0,\r\n      \"total\": 0\r\n    }\r\n  ],\r\n  \"stoppingPoints\": [\r\n    {\r\n      \"id\": 0,\r\n      \"startPoint\": {},\r\n      \"endPoint\": {},\r\n      \"duration\": {},\r\n      \"reason\": \"string\"\r\n    }\r\n  ],\r\n  \"piecesPerMinute\": 0,\r\n  \"maximumProductionCapacity\": 0,\r\n  \"workingTime\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/facke-iot/machine",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"facke-iot",
+						"machine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{baseUrl}}/facke-iot/machine/{id}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 2,\r\n  \"name\": \"string\",\r\n  \"productions\": [\r\n    {\r\n      \"id\": 0,\r\n      \"time\": \"MORNING\",\r\n      \"product\": \"string\",\r\n      \"goodPiece\": 0,\r\n      \"badPiece\": 0,\r\n      \"total\": 0\r\n    }\r\n  ],\r\n  \"stoppingPoints\": [\r\n    {\r\n      \"id\": 0,\r\n      \"startPoint\": {},\r\n      \"endPoint\": {},\r\n      \"duration\": {},\r\n      \"reason\": \"string\"\r\n    }\r\n  ],\r\n  \"piecesPerMinute\": 0,\r\n  \"maximumProductionCapacity\": 0,\r\n  \"workingTime\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/facke-iot/machine/2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"facke-iot",
+						"machine",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{baseUrl}}/facke-iot/machine/{id}/stopping-points",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 2,\r\n  \"name\": \"string\",\r\n  \"productions\": [\r\n    {\r\n      \"id\": 0,\r\n      \"time\": \"MORNING\",\r\n      \"product\": \"string\",\r\n      \"goodPiece\": 0,\r\n      \"badPiece\": 0,\r\n      \"total\": 0\r\n    }\r\n  ],\r\n  \"stoppingPoints\": [\r\n    {\r\n      \"id\": 0,\r\n      \"startPoint\": {},\r\n      \"endPoint\": {},\r\n      \"duration\": {},\r\n      \"reason\": \"string\"\r\n    }\r\n  ],\r\n  \"piecesPerMinute\": 0,\r\n  \"maximumProductionCapacity\": 0,\r\n  \"workingTime\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/facke-iot/machine/2/stopping-points",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"facke-iot",
+						"machine",
+						"2",
+						"stopping-points"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{baseUrl}}/facke-iot/machine/{id}/productions",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 2,\r\n  \"name\": \"string\",\r\n  \"productions\": [\r\n    {\r\n      \"id\": 0,\r\n      \"time\": \"MORNING\",\r\n      \"product\": \"string\",\r\n      \"goodPiece\": 0,\r\n      \"badPiece\": 0,\r\n      \"total\": 0\r\n    }\r\n  ],\r\n  \"stoppingPoints\": [\r\n    {\r\n      \"id\": 0,\r\n      \"startPoint\": {},\r\n      \"endPoint\": {},\r\n      \"duration\": {},\r\n      \"reason\": \"string\"\r\n    }\r\n  ],\r\n  \"piecesPerMinute\": 0,\r\n  \"maximumProductionCapacity\": 0,\r\n  \"workingTime\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/facke-iot/machine/2/productions",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"facke-iot",
+						"machine",
+						"2",
+						"productions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
