@@ -1,96 +1,51 @@
 // @ts-ignore
 
-import { Inject, Injectable } from "@nestjs/common";
-import { interval, map, Subject, takeUntil, takeWhile } from "rxjs";
+import { Body, Inject, Injectable, Param, Patch, Post, Put } from "@nestjs/common";
+import { map, Subject, takeUntil } from "rxjs";
 import { HttpService } from "@nestjs/axios";
 import { MachineDto } from "./domain/machine.dto";
-import { ShiftDto } from "./domain/shift.dto";
+import { StoppingPointDto } from "./domain/stopping-point.dto";
+import { ProductionDto } from "./domain/production.dto";
 
 @Injectable()
 export class FackeIotService {
 
-  statusFackeIot: boolean;
-  time: number = 1000;
-
-  limitOfRequest: number = 24;
-
-  numberOfRequest: number = 0;
-
   componentDestroyed$: Subject<null> = new Subject();
-
-  shifts: ShiftDto[] = [
-    new ShiftDto({}, 8),
-    new ShiftDto({}, 16),
-    new ShiftDto({}, 24)];
 
   constructor(
     @Inject(HttpService)
     private httpService: HttpService) {
-    this.statusFackeIot = false;
   }
 
-  status(): string {
-    return `The status is ${this.statusFackeIot ? "online" : "offline"}`;
+
+  saveMachine(machine: MachineDto): any {
+    const dockerHost: string = "http://host.docker.internal:1880/facke-iot";
+    return this.sendToNodeRed("machine", machine);
   }
 
-  start(): string {
-    if (this.statusFackeIot) {
-      return "facke-iot is started";
-    } else {
-      this.numberOfRequest = 1;
-      this.statusFackeIot = true;
-      this.whenSendInformation();
-      return "starting facke-iot";
-    }
+  updateMachine(id: any, machine: MachineDto): any {
+    return this.sendToNodeRed(`machine/id`, machine, id);
   }
 
-  stop(): string {
-    if (!this.statusFackeIot) {
-      return "facke-iot is stoped";
-    } else {
-      this.numberOfRequest = 0;
-      this.statusFackeIot = false;
-      this.whenSendInformation();
-      return "stoping facke-iot";
-    }
+  saveStoppoingPoint(id: any, stoppingPointDto: StoppingPointDto): any {
+    return this.sendToNodeRed(`machine/id/stoppoing-point`, stoppingPointDto, id);
   }
 
-  configuration(configuration: any): string {
-    const time = this.time = Number(configuration?.time || 1000);
-    const limit = this.limitOfRequest = Number(configuration?.limit || 24);
-    return `The time is ${time} and now it's ${time}. The limit of request it's ${limit}`;
+  saveProduction(id: any, productionDto: ProductionDto): any {
+    return this.sendToNodeRed(`machine/id/production`, productionDto, id);
   }
 
-  whenSendInformation(): void {
-    interval(Number(this.time))
-      .pipe(takeWhile(() => (this.statusFackeIot)))
-      .pipe(takeUntil(this.componentDestroyed$)).subscribe(async () => {
-      if (this.numberOfRequest > this.limitOfRequest) {
-        this.stop();
-      } else {
-        this.sendInformation();
-      }
-    });
-  }
-
-  getMachine(): any {
-    const maquina = new MachineDto({}, this.numberOfRequest);
-    maquina.paradas = this.shifts;
-    return { maquina };
-  }
-
-  sendInformation(): void {
-    this.httpService.post("http://host.docker.internal:1880/facke-iot", this.getMachine())
+  sendToNodeRed(request: string, body: any, id: any = null): any {
+    this.httpService.post('http://localhost:1880/facke-iot', body, {
+      headers: {point: request, id}
+    })
       .pipe(map((response: any) => response.data.response))
       .pipe(takeUntil(this.componentDestroyed$))
       .subscribe({
         next: (result: any) => {
-          console.log(`Resquest number of: ${this.numberOfRequest}`);
-          this.numberOfRequest++;
-          console.log("Response: ", result);
+          return result;
         }, error: (error: any) => {
-          this.statusFackeIot = false;
-          console.log(error);
+          throw error;
         }
       });
   }
