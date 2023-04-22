@@ -42,6 +42,11 @@ public class MachineService {
         return machineRepository.save(machine);
     }
 
+    public void delete(Long id) throws ObjectNotFoundException {
+        Machine machine = getById(id);
+        machineRepository.delete(machine);
+    }
+
     public Machine addProduction(Long machineId, ProductionDTO productionDTO) {
         Machine machine = getById(machineId);
         Production production = productionService.create(productionDTO);
