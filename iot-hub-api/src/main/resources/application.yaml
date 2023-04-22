@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/soft?useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
+    url: jdbc:postgresql://localhost:5432/soft?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&allowPublicKeyRetrieval=true
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
