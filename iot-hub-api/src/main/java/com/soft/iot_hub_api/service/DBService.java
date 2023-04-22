@@ -38,7 +38,7 @@ public class DBService {
         return StoppingPointDTO.builder()
                 .reason("Machine under maintenance")
                 .startPoint(Instant.now())
-                .endPoint(Instant.now().minus(24, ChronoUnit.HOURS))
+                .endPoint(Instant.now().plus(24, ChronoUnit.HOURS))
                 .build();
     }
 
