@@ -5,6 +5,7 @@ import com.soft.iot_hub_api.domain.Production;
 import com.soft.iot_hub_api.domain.StoppingPoint;
 import com.soft.iot_hub_api.dto.MachineDTO;
 import com.soft.iot_hub_api.dto.ProductionDTO;
+import com.soft.iot_hub_api.dto.SimplifiedMachineDTO;
 import com.soft.iot_hub_api.dto.StoppingPointDTO;
 import com.soft.iot_hub_api.repository.MachineRepository;
 import lombok.AllArgsConstructor;
@@ -30,13 +31,13 @@ public class MachineService {
         return machineRepository.findById(machineId).orElseThrow(() -> new ObjectNotFoundException(machineId, "Machine"));
     }
 
-    public Machine create(MachineDTO machineDTO) {
+    public Machine create(SimplifiedMachineDTO machineDTO) {
         Machine machine = new Machine();
         BeanUtils.copyProperties(machineDTO, machine);
         return machineRepository.save(machine);
     }
 
-    public Machine update(Long id, MachineDTO machineDTO) throws ObjectNotFoundException {
+    public Machine update(Long id, SimplifiedMachineDTO machineDTO) throws ObjectNotFoundException {
         Machine machine = getById(id);
         BeanUtils.copyProperties(machineDTO, machine);
         return machineRepository.save(machine);

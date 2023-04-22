@@ -3,6 +3,7 @@ package com.soft.iot_hub_api.controller.exception;
 import com.soft.iot_hub_api.domain.Machine;
 import com.soft.iot_hub_api.dto.MachineDTO;
 import com.soft.iot_hub_api.dto.ProductionDTO;
+import com.soft.iot_hub_api.dto.SimplifiedMachineDTO;
 import com.soft.iot_hub_api.dto.StoppingPointDTO;
 import com.soft.iot_hub_api.service.MachineService;
 import lombok.AllArgsConstructor;
@@ -34,14 +35,14 @@ public class MachineController {
     }
 
     @PostMapping
-    public ResponseEntity<URI> insert(@RequestBody MachineDTO machineDTO) {
+    public ResponseEntity<URI> insert(@RequestBody SimplifiedMachineDTO machineDTO) {
         Machine machine = service.create(machineDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(machine.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<URI> update(@RequestBody MachineDTO machineDTO, @PathVariable Long id) {
+    public ResponseEntity<URI> update(@RequestBody SimplifiedMachineDTO machineDTO, @PathVariable Long id) {
         Machine machine = this.service.update(id, machineDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(machine.getId()).toUri();
         return ResponseEntity.created(uri).build();
